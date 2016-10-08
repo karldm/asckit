@@ -22,10 +22,10 @@ You will get the relevant documentation in the /docs directory
 * user manual
 * reference manual for more advance usage and modifications
 
-## Licences
+# Licences
 This work has been done following the free-makers spirit and largely benefit from other works found in various Web sites. The licence choice gives you some rights for using and re-using the material given, both the sofware, the documentation and the hardware drawings.
 
-### Software
+## Software
 The software is licence is the MIT, one of the most permissive (see http://choosealicense.com/licenses/). You ar eallowed to copy it, modifiy it, for personnal or even commercial usage. The only condition is to indicate the copyrright notice (see above).
 
 MIT License
@@ -51,5 +51,5 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-### Hardware
+## Hardware
 Licencing the hardware is a more recent subject. See the dicussion http://www.open-electronics.org/how-to-choose-your-open-source-hardware-license/. We ahve choosen the same licence as the Arduino products, i.e. CC-BY-SA. The SA letters means that you have to keep the same licence for derivative works. You will find a readable explanation of the licence at https://creativecommons.org/licenses/by-sa/4.0/, the legal code is avaibale at https://creativecommons.org/licenses/by-sa/4.0/legalcode.
