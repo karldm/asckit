@@ -1,5 +1,5 @@
 # ASCKit
-Air Solar Controller - Kit for arduino yun
+Air Solar Controller - Kit for the Arduino Yun
 
 # Overview
 This thermostat provides an optimal control of an air solar ventilation and a single heated zone to reduce the primary energy needs by 30 to 60 %. Connected to your local network, an embedded Webserver provides an user-friendly interface accessible by most browsers from a computer or a mobile device.  The heating needs can be scheduled for 7 days by the web interface.  For user applications, two temperature sensors and one relay can be remotely monitored and controlled.
@@ -23,7 +23,7 @@ You will get the relevant documentation in the /docs directory
 * reference manual for more advance usage and modifications
 
 # Licences
-This work has been done following the free-makers spirit and largely benefit from other works found in various Web sites. The licence choice gives you some rights for using and re-using the material given, both the sofware, the documentation and the hardware drawings.
+This work has been done following the free-makers spirit and has widely benefit from other works found in various Web sites. The licence choice gives you some rights for using and re-using the material given, both the sofware, the documentation and the hardware drawings.
 
 ## Software
 The software is licence is the MIT, one of the most permissive (see http://choosealicense.com/licenses/). You are allowed to copy it, modifiy it, for personnal or even commercial usage. The only condition is to indicate the following copyright notice:
