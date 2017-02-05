@@ -1,0 +1,190 @@
+<!-- ASC-Kit -- homemonitoring -->
+<!-- 
+	see:
+	http://demos.jquerymobile.com/1.4.5/
+	http://www.w3schools.com/jquerymobile 
+-->
+
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+<title>HomeMonitoring</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="ico-renergia-green.ico" type="image/x-icon" />
+<link rel="appel-touch-icon" href="ico-renergia-97.png">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+<!-- scripts for data update and commands transmission -->
+<!-- we could make a separate file -->
+<script>
+//setInterval(function(){ myTimer() }, 1000); // time every sec
+
+$(document).ready(function() {
+  // init
+  myTimer();        // start time update
+  updateContent();  // update the data -- every 5 sec
+  updateSwitches(); // get the current state -- every 10 sec
+});
+
+function myTimer() {
+  var d = new Date();
+  var t = d.toLocaleTimeString();
+  var dd = d.toDateString();
+  document.getElementById("clock").innerHTML = dd+" - "+t;
+  setTimeout( function(){ myTimer() }, 1000); // redo in 1 sec    
+}
+
+// update the html page data
+function updateContent() {
+  $.getJSON("/data/get/", function(data, status) {
+    // declare the informations to be updated here
+    $('#tamb').html(data.value.tamb);
+    $('#hamb').html(data.value.hamb);
+    $('#tusr1').html(data.value.tusr1);
+    $('#tusr2').html(data.value.tusr2);
+    $('#tusr3').html(data.value.tusr3);
+    $('#tusr4').html(data.value.tusr4);
+
+    $('#version').html(data.value.version); // not changing very often
+  })
+  setTimeout( function(){updateContent()}, 5000); // redo in 5 sec
+}
+
+// synchronize the switches status in html page
+// we have to define the switches list here
+function updateSwitches() {
+  $.getJSON("/data/get/", function(data, status) {
+    // declare the switches list
+    updateSwitch("swusr1", data.value.swusr1);
+    updateSwitch("swusr2", data.value.swusr2);
+    updateSwitch("swusr3", data.value.swusr3);
+  });
+  // error handle for $.getJSON
+  // see http://stackoverflow.com/questions/1740218/error-handling-in-getjson-calls
+  // -- not implemented
+  
+  setTimeout( function(){updateSwitches()}, 10000); // redo in 10 sec
+}
+
+function updateSwitch( id, state ) {
+  // refresh the current state of the switch
+  // see https://api.jquerymobile.com/
+  if ( state == 1 ) {
+    // switch is on
+    $('#'+id).prop('checked', true ).flipswitch( "refresh" );
+  } else {
+    // switch is off
+    $('#'+id).prop('checked', false ).flipswitch( "refresh" );
+  }
+}
+
+// Event handler for the flipswitch button
+// try to do better...
+// Function to control relays
+function switchClick(clicked_id, clicked_checked) {
+  // build the command from id & checked
+  cmdtext = "/data/put/"+clicked_id;
+  
+  if ( clicked_checked == false ) {
+    cmdtext = cmdtext+"/0";
+  } else {
+    cmdtext = cmdtext+"/1";
+  }
+  
+  // send the command with a json request
+  $.getJSON(cmdtext, function(data, status) {
+    // should do some indication of the success...
+    //updateSwitch("swusr1", data.value.swusr1);
+  });
+}
+
+function errorHandle( data, status ) {
+  if ( status != 'success') {
+    // just tell failed
+    alert("Command failed!");
+  }
+}
+</script>
+
+</head>
+
+<body>
+<!-- Home page -->
+<div data-role="page" id="pagehome" data-theme="a">
+  <div data-role="header">
+    <h1>myHome</h1>
+  </div>
+  <div data-role="main" class="ui-content">
+    <p><small><span id="clock">?</span></small></p>  <!-- The time gets inserted here -->
+<!--
+    <button class="ui-btn" id="refresh_set">Ambiance</button>
+-->
+    <div data-role="collapsible" data-collapsed="false">
+	<h2>Ambiance</h2>
+    <table data-role="table" class="ui-responsive">
+      <thead>
+        <tr>
+          <th>Temperature</th>
+          <th>Humidity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span id="tamb">?</span>&degC</td>
+          <td><span id="hamb">?</span>%</td>
+       </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div data-role="collapsible">
+      <h2>User temperatures</h2>
+      <table data-role="table" class="ui-responsive">
+        <thead>
+          <tr>
+            <th>Temperature 1</th>
+            <th>Temperature 2</th>
+            <th>Temperature 3</th>
+            <th>Temperature 4</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span id="tusr1">?</span>&degC</td>
+            <td><span id="tusr2">?</span>&degC</td>
+            <td><span id="tusr3">?</span>&degC</td>
+            <td><span id="tusr4">?</span>&degC</td>
+         </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div data-role="collapsible">
+      <h2>User switches</h2>
+      <form>
+        <div class="ui-field-contain">
+          <label for="swusr1">Switch1</label>
+          <input onchange="switchClick(this.id, this.checked)" type="checkbox" data-role="flipswitch" name="swusr1" id="swusr1" data-mini="true">
+        </div>
+        <div class="ui-field-contain">
+          <label for="swusr2">Switch2</label>
+          <input onchange="switchClick(this.id, this.checked)" type="checkbox" data-role="flipswitch" name="swusr2" id="swusr2" data-mini="true">
+        </div>
+        <div class="ui-field-contain">
+          <label for="swusr3">Switch3</label>
+          <input onchange="switchClick(this.id, this.checked)" type="checkbox" data-role="flipswitch" name="swusr3" id="swusr3" data-mini="true">
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <div data-role="footer">
+    <p align="center"><i><small>ASC-Kit <span id="version">?</span></small></i></p>
+  </div>
+</div>
+<!-- end pages -->
+</body>
+</html>
