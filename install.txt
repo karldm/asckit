@@ -1,0 +1,34 @@
+12/10/2016
+==========
+
+Webapp installation
+-------------------
+on the Yun/Linino go to the webserver home directory
+> cd /osjs/dist
+
+Create the folder /renergia
+> mkdir renergia
+
+Copy the www_sd files for both applications (upload)
+homemonitoring 		=> /osjs/dist/renergia/hm
+airsolarcontroller 	=> /osjs/dist/renergia/asc
+python 				=> /osjs/dist/renergia/python
+
+
+Arduino compilation
+-------------------
+On your computer, unzip the asckit.zip
+
+a) for homemonitoring app
+
+Go to the homemonitoring folder
+Open IDE with homemonitoring.ino
+Compile and upload the code onto your Yun
+Access to the embedded website IP/renergia/hm
+
+b) for airsolarcontroller app
+
+Go to the airsolarcontroller
+Open IDE with airsolarcontroller.ino
+Compile and upload the cde onto your Yun
+Access to the embedded website IP/renergia/asc
