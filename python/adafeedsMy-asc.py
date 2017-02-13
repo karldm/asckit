@@ -32,7 +32,7 @@
 # > crontab -e
 #
 # add line (data send every 10 min):
-# */10 * * * * python /osjs/dist/renergia/python/adafeedsMy-hm.py
+# */10 * * * * python /osjs/dist/renergia/python/adafeedsMy-asc.py
 #
 # > /etc/init.d/cron start
 # > /etc/init.d/cron enable
@@ -61,7 +61,7 @@ sys.path.insert(0, '/usr/lib/python2.7/bridge/')
 from bridgeclient import BridgeClient as bridgeclient
 client = bridgeclient()
 
-# Set to your Adafruit IO key.
+# Set to your Adafruit IO key and uncomment the following line
 #ADAFRUIT_IO_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
 # Create an instance of the REST client.
@@ -81,8 +81,8 @@ print 'Value assigned to tamb is ' + all['tamb']
 print 'Value assigned to hamb is ' + all['hamb']
 	
 #
-print 'Value assigned to swusr1 is ' + all['swusr1']
-print 'Value assigned to swusr2 is ' + all['swusr2']
+print 'Value assigned to swmh is ' + all['swmh']
+print 'Value assigned to swusr is ' + all['swusr']
 	
 #
 aio.send('my_tamb', float(all['tamb']))
@@ -90,16 +90,16 @@ aio.send('my_hamb', float(all['hamb']))
 	
 # uncomment to send the switches status
 """
-if int(all['swusr1']) == 1:
-	aio.send('my_swusr1', 'ON')
+if int(all['swmh']) == 1:
+	aio.send('my_swmh', 'ON')
 else:
-	aio.send('my_swusr1', 'OFF')
+	aio.send('my_swmh', 'OFF')
 		
 #
-if int(all['swusr2']) == 1:
-	aio.send('my_swusr2', 'ON')
+if int(all['swusr']) == 1:
+	aio.send('my_swusr', 'ON')
 else:
-	aio.send('my_swusr2', 'OFF')
+	aio.send('my_swusr', 'OFF')
 """
 
 # close()
