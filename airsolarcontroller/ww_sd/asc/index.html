@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<!-- Single zone demo -->
+<html>
+<head>
+<title>ASC-Kit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="ico-renergia.ico" type="image/x-icon" />
+<link rel="apple-touch-icon" href="ico-renergia-128.png">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="asc.js"></script>
+</head>
+
+<body>
+<!-- Home page - status info -->
+<div data-role="page" id="page_home" data-theme="b">
+
+  <div data-role="header">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#page_home" data-icon="home" class="ui-btn-active ui-state-persist">Home</a></li>
+        <li><a href="#page_user" data-icon="power">User</a></li>
+        <li><a href="#page_settings" data-icon="gear">Settings</a></li>
+        <li><a href="#page_info" data-icon="info">Infos</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <p><small><span id="clock">?</span></small></p>  <!-- The time gets inserted here -->
+
+    <div data-role="collapsible" data-collapsed="false">
+      <h2>Ambiance</h2>
+      <table data-role="table" class="ui-responsive" ui-shadow>
+        <thead>
+          <tr>
+            <th>Temperature</th>
+            <th>Set point</th>
+            <th>Humidity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span id="tamb">?</span>&degC</td>
+            <td><span id="tset">?</span>&degC</td>
+            <td><span id="hamb">?</span>%</td>
+         </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div data-role="collapsible" data-collapsed="false">
+      <h2>Heater</h2>
+      <table data-role="table" class="ui-responsive" ui-shadow>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Mode</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span id="x_statemh">?</span></td>
+            <td><span id="x_modemh">?</span></td>
+          </tr>
+        </tbody>
+      </table>
+	</div>
+	
+    <div data-role="collapsible" data-collapsed="true" class="solar">
+      <h2>Solar Heater</h2>
+       <table data-role="table" class="ui-responsive" ui-shadow>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Mode</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span id="x_statesh">?</span></td>
+            <td><span id="x_modesh">?</span></td>
+          </tr>
+        </tbody>
+      </table>
+	  
+       <table data-role="table" class="ui-responsive" ui-shadow>
+        <thead>
+          <tr>
+            <th>Collector</th>
+            <th>External</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span id="tcol">?</span>&degC</td>
+            <td><span id="text">?</span>&degC</td>
+         </tr>
+        </tbody>
+      </table>
+  </div>
+
+    <div data-role="collapsible" data-collapsed="true">
+      <h2>Heater usage</h2>
+      <form>
+        <div class="ui-field-contain">
+          <label for = "p_tcmh"><small>TCMH (h)</small></label>
+          <input type = "text" name="p_tcmh" id="p_tcmh" value="?" data-disabled="true">
+        </div>
+      </form>
+	  
+      <form class="solar">
+        <div class="ui-field-contain">
+          <label for = "p_tcsh" class="solar"><small>TCSH (h)</small></label>
+          <input type = "text" name="p_tcsh" id="p_tcsh" value="?" data-disabled="true" class="solar">
+
+          <label for = "p_indsh" class="solar"><small>INDSH (Wh)</small></label>
+          <input type = "text" name="p_indsh" id="p_indsh" value="?" data-disabled="true" class="solar">
+        </div>
+      </form>
+    </div>
+  
+    <div data-role="collapsible" data-collapsed="true">
+      <h2>User</h2>
+      <table data-role="table" class="ui-responsive">
+        <thead>
+          <tr>
+            <th>Temperature 1</th>
+            <th>Temperature 2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span id="tusr1">?</span>&degC</td>
+            <td><span id="tusr2">?</span>&degC</td>
+          </tr>
+        </tbody>
+      </table>
+      <form>
+        <div class="ui-field-contain">
+          <label for="swusr">Switch</label>
+          <input onchange="switchClick(this.id, this.checked)" type="checkbox" data-role="flipswitch" name="swusr" id="swusr" data-mini="true">
+        </div>
+      </form>
+
+	</div>
+	
+ </div>
+
+  <div data-role="footer">
+    <p align="center"><i><small>ASC-Kit</small></i></p>
+  </div>
+</div> 
+
+<!-- normal user settings page -->
+<div data-role="page" id="page_user" data-theme="b">
+
+  <div data-role="header">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#page_home" data-icon="home">Home</a></li>
+        <li><a href="#page_user" data-icon="power" class="ui-btn-active ui-state-persist">User</a></li>
+        <li><a href="#page_settings" data-icon="gear">Settings</a></li>
+        <li><a href="#page_info" data-icon="info">Infos</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <div data-role="collapsible" data-collapsed="false">
+      <h2>Heater</h2>
+      <fieldset data-role="controlgroup">
+        <input onchange="putkeyval('modemh', '0')" type="radio" name="mh" id="mhoff" value="0">
+        <label for="mhoff">Off</label>
+
+        <input onchange="putkeyval('modemh', '1')" type="radio" name="mh" id="mhheat" value="1">
+        <label for="mhheat">Heat</label>
+
+        <input onchange="putkeyval('modemh', '2')" type="radio" name="mh" id="mheco" value="2">
+        <label for="mheco">Eco</label>
+
+        <input onchange="putkeyval('modemh', '3')" type="radio" name="mh" id="mhfp" value="3">
+        <label for="mhfp">Freeze Protect</label>
+      </fieldset>
+	</div>
+	
+    <div data-role="collapsible" data-collapsed="true" class="solar">
+      <h2>Solar Heater</h2>
+      <fieldset data-role="controlgroup">
+        <label for="shoff">Off</label>
+        <input onchange="putkeyval('modesh', '0')" type="radio" name="sh" id="shoff" value="0">
+
+        <label for="shheat">Heat</label>
+        <input onchange="putkeyval('modesh', '1')" type="radio" name="sh" id="shheat" value="1">
+      </fieldset>
+	</div>
+	
+    <div data-role="collapsible">
+      <h2>Set point</h2>
+
+<!-- the slider for setpoint temperature: why is the value=20deg.C always the same???-->
+      <label for="sltset"></label>
+      <input onchange="putkeyval('tset', this.value)" type="range" name="sltset" id="sltset" value="20" min="15" max="30" step="0.5" data-popup-enabled="true">
+
+<!-- the ECO mode selection -->
+      <form>
+        <div class="ui-field-contain">
+          <label for="dteco">Eco</label>
+          <select name="dteco" id="mhdteco" data-mini="true">
+            <option id="x_eco2" onclick="putkeyval('dteco', '2')" value="2">2&degC</option>
+            <option id="x_eco3" onclick="putkeyval('dteco', '3')" value="3">3&degC</option>
+            <option id="x_eco5" onclick="putkeyval('dteco', '5')" value="5">5&degC</option>
+            <option id="x_eco10" onclick="putkeyval('dteco', '10')" value="10">10&degC</option>
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div data-role="footer">
+    <p align="center"><i><small>ASC-Kit</small></i></p>
+  </div>
+</div> 
+
+<!-- page settings -->
+<div data-role="page" id="page_settings" data-theme="b">
+
+  <div data-role="header">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#page_home" data-icon="home">Home</a></li>
+        <li><a href="#page_user" data-icon="power">User</a></li>
+        <li><a href="#page_settings" data-icon="gear" class="ui-btn-active ui-state-persist">Settings</a></li>
+        <li><a href="#page_info" data-icon="info">Infos</a></li>
+      </ul>
+   </div>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <div data-role="collapsible">
+      <h2>Controller settings</h2>
+	  <form>
+        <div class="ui-field-contain">
+          <label for = "p_tmhon"><small>TMHON (s)</small></label>
+          <input onchange="putkeyval('tmhon', this.value)" type = "text" name="p_tmhon" id="p_tmhon" value="?">
+	  
+          <label for = "p_tmhoff"><small>TMHOFF (s)</small></label>
+          <input onchange="putkeyval('tmhoff', this.value)" type = "text" name="p_tmhoff" id="p_tmhoff" value="?">
+
+          <label for = "p_tfp"><small>TFP (&degC)</small></label>
+          <input onchange="putkeyval('tfp', this.value)" type="text" name="p_tfp" id="p_tfp" value="?">
+
+          <label for = "p_hyst"><small>HYST (&degC)</small></label>
+          <input onchange="putkeyval('hyst', this.value)" type="text" name="p_hyst" id="p_hyst" value="?">
+
+          <label for = "p_dtdht"><small>DTDHT (&degC)</small></label>
+          <input onchange="putkeyval('dtdht', this.value)" type="text" name=""p_dtdht" id="p_dtdht" value="?">
+
+          <label for = "p_system"><small>SYSTEM</small></label>
+          <input onchange="putkeyval('system', this.value)" type="text" name="p_system" id="p_system" value="?">
+        </div>
+      </form>
+	  
+<!-- config parameters for solar system -->
+	  <form class="solar">
+        <div class="ui-field-contain">
+          <label for = "p_tshon" class="solar"><small>TSHON (s)</small></label>
+          <input onchange="putkeyval('tshon', this.value)" type = "text" name="p_tshon" id="p_tshon" value="?" class="solar">
+	  
+          <label for = "p_tshoff" class="solar"><small>TSHOFF (s)</small></label>
+          <input onchange="putkeyval('tshoff', this.value)" type = "text" name="p_tshoff" id="p_tshoff" value="?" class="solar">
+
+          <label for = "p_dtshon" class="solar"><small>DTSHON (&degC)</small></label>
+          <input onchange="putkeyval('dtshon', this.value)" type = "text" name="p_dtshon" id="p_dtshon" value="?" class="solar">
+	  
+          <label for = "p_dtshoff" class="solar"><small>DTSHOFF (&degC)</small></label>
+          <input onchange="putkeyval('dtshoff', this.value)" type = "text" name="p_dtshoff" id="p_dtshoff" value="?" class="solar">
+
+          <label for = "p_aug1" class="solar"><small>AUG1 (&degC)</small></label>
+          <input onchange="putkeyval('aug1', this.value)" type="text" name="p_aug1" id="p_aug1" value="?" class="solar">
+
+          <label for = "p_aug2" class="solar"><small>AUG2 (&degC)</small></label>
+          <input onchange="putkeyval('aug2', this.value)" type="text" name="p_aug2" id="p_aug2" value="?" class="solar">
+
+          <label for = "p_vfan" class="solar"><small>VFAN (m3/h)</small></label>
+          <input onchange="putkeyval('vfan', this.value)" type="text" name="p_vfan" id="p_vfan" value="?" class="solar">
+
+          <label for = "p_asolt" class="solar"><small>ASOLTH (m2)</small></label>
+          <input onchange="putkeyval('asolt', this.value)" type="text" name="p_asolt" id="p_asolt" value="?" class="solar">
+
+          <label for = "p_conf1" class="solar"><small>CONF1</small></label>
+          <input onchange="putkeyval('conf1', this.value)" type="text" name="p_conf1" id="p_conf1" value="?" class="solar">
+        </div>
+      </form>
+	</div>
+	
+    <div data-role="collapsible">
+      <h2>User settings</h2>
+	  <form>
+        <div class="ui-field-contain">
+          <label for = "p_tset"><small>TSET (&degC)</small></label>
+          <input type = "text" name="p_tset" id="p_tset" value="?" data-disabled="true">
+
+          <label for = "p_dteco"><small>DTECO (&degC)</small></label>
+          <input type = "text" name="p_dteco" id="p_dteco" value="?" data-disabled="true">
+
+          <label for = "p_modemh"><small>MODEMH</small></label>
+          <input type = "text" name="p_modemh" id="p_modemh" value="?" data-disabled="true">
+		</div>
+      </form>
+	  
+ 	  <form class="solar">
+        <div class="ui-field-contain">
+          <label for = "p_modesh"><small>MODESH</small></label>
+          <input type = "text" name="p_modesh" id="p_modesh" value="?" data-disabled="true">
+		</div>
+      </form>
+   </div>
+
+    <div data-role="collapsible">
+      <h2>MCU</h2>
+      <form>
+        <div class="ui-field-contain">
+          <label for = "p_nloops"><small>NLOOPS</small></label>
+          <input type = "text" name="p_nloops" id="p_nloops" value="?" data-disabled="true">
+
+          <label for = "p_statemh"><small>STATEMH</small></label>
+          <input type = "text" name="p_statemh" id="p_statemh" value="?" data-disabled="true">
+
+          <label for = "p_statectrl"><small>STATECTRL</small></label>
+          <input type = "text" name="p_statectrl" id="p_statectrl" value="?" data-disabled="true">
+
+          <label for = "p_errsensor"><small>ERRSENSOR</small></label>
+          <input type = "text" name="p_errsensor" id="p_errsensor" value="?" data-disabled="true">
+
+          <label for = "p_errctrl"><small>ERRCTRL</small></label>
+          <input type = "text" name="p_errctrl" id="p_errctrl" value="?" data-disabled="true">
+
+          <label for = "p_version"><small>VERSION</small></label>
+          <input type = "text" name="p_version" id="p_version" value="?" data-disabled="true">
+        </div>
+      </form>
+    </div>
+
+    <button class="ui-btn" id="reset_def">Restore defaults</button>
+  </div>
+
+  <div data-role="footer">
+    <p align="center"><i><small>ASC-Kit</small></i></p>
+  </div>
+</div> 
+
+<!-- pageinfo: informations for the user -->
+<div data-role="page" data-dialog="true" id="page_info">
+  <div data-role="header">
+    <h1>Information</h1>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <p>ASC-Kit - hardware v1.3</p>
+    <p>Webapp version dev.20170211b - rel.20170212</p>
+	<a href="https://github.com/karldm/asckit" target="_blank">Visit github</a> 
+  </div>
+</div> 
+
+<!-- end pages -->
+</body>
+</html>
