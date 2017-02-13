@@ -1,9 +1,22 @@
-12/10/2016
+2/12/2017
 ==========
+
+WIFI setup
+----------
+- reset the WIFI connection (push 8-15 sec on the reset button near the Usb connector)
+- the YUN is configured in a WIFI access point (Arduino-Yun-xxxxx)
+- connect your computer
+- go to IP 192.168.240.1
+- follow the Wizard or open with arduino>utilities>Wizard
+- after the Yun reset, connect your computer to the IP adress (find it either the IDE or a IP scanner tool)
+- test the bridge with [IP]/data/get (if not working, reset the shield or the power supply)
+
+More information on https://www.arduino.cc/en/Guide/ArduinoYun
+
 
 Webapp installation
 -------------------
-on the Yun/Linino go to the webserver home directory
+on the Yun/Linino go to the webserver home directory (either with a terminal or through the node.js interafce)
 > cd /osjs/dist
 
 Create the folder /renergia
@@ -19,16 +32,30 @@ Arduino compilation
 -------------------
 On your computer, unzip the asckit.zip
 
-a) for homemonitoring app
+a) for the homemonitoring app
 
 Go to the homemonitoring folder
 Open IDE with homemonitoring.ino
 Compile and upload the code onto your Yun
 Access to the embedded website IP/renergia/hm
 
-b) for airsolarcontroller app
+b) for the airsolarcontroller app
 
 Go to the airsolarcontroller
 Open IDE with airsolarcontroller.ino
 Compile and upload the cde onto your Yun
 Access to the embedded website IP/renergia/asc
+
+Adafruit IO
+-----------
+Install io_client_library in the /python folder following the instructions
+https://github.com/adafruit/io-client-python
+
+Create an account at https://io.adafruit.com/
+
+Copy your AIO Key into the adafeedsMy-hm.py and adafeedsMy-asc.py files
+(from io.adafruit.com account > settings > VIEW AIO KEY)
+
+Customize your feeds name if needed
+
+Setup crontab on the linux (e.g. through the node.js interface) following the instruction in the python files
