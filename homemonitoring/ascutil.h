@@ -1,9 +1,8 @@
 /*
- * util.h
- *
- * Utilitary functions
- * in/out serial port
- *
+   ascutil.h
+   
+   Arduino Solar Controller
+   by karldm, Feb 2017
  */
 
 #ifndef ascutil_h

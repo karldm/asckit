@@ -1,8 +1,12 @@
 /*
- * data.h
- *
- * Data management and memory accesses (EEPROM&FLASH)
- *
+   data.h
+ 
+   Arduino Solar Controller
+   Data management & memory accesses (EEPROM&FLASH)
+   by karldm, Feb 2017
+  
+   Data management and memory accesses (EEPROM&FLASH)
+  
  */
 
 #ifndef ascdata_h
